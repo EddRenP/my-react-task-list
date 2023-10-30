@@ -1,0 +1,10 @@
+[
+    {
+        "name" : "Prepare dinner",
+        "completed" : false
+    },
+    {
+        "name" : "Read a book",
+        "completed" : false
+    }
+]
