@@ -51,14 +51,8 @@
   border-color: gray;
 }
 
-.div-task-list{
-  margin-left: -20px;
-  margin-right: -20px;
-}
-
 hr{
-  margin-left: -20px;
-  margin-right: 10px;
+
 }
 
 ul{
@@ -70,7 +64,7 @@ li{
   list-style-type: none;
 }
 
-.input-to-do{
+.input-to-do, .input-update{
   padding: 5px 5px 5px 5px;
   border-radius: 5px;
 }
@@ -79,17 +73,28 @@ li{
   margin-left: 5px;
   padding: 3px 10px 5px 10px;
   border-radius: 5px;
-  background-color: #409455;
+  background-color: black;
 }
 
 .edit-task-list,.delete-task-list{
-  padding: 3px 10px 5px 10px;
+  margin-top: 15px;
+  margin-right: 5px;
+  background-color: black;
+  font-size: 10px;
 }
 
-.edit-task-list{
-  background-color: #bbbd59;
+.task-list-content{
+  display: inline-flex;
 }
 
-.delete-task-list{
-  background-color: #ad4545;
+.task-list-content-left{
+  float: left;
+}
+
+.task-list-content-right{
+  float: right;
+}
+
+.task-name{
+  margin-right: 5px;
 }

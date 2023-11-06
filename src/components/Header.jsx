@@ -1,13 +1,12 @@
 import Task from "./Task";
 
-function Header(){
+function Header({tasks, setTasks}){
     return (
     <div className="div-all">
         <div className="div-header">
-            <h1>To-do List</h1>
-            <div>User: Edd</div>
+            <h1>To do List</h1>
         </div>
-        <Task/>
+        <Task tasks={tasks} setTasks={setTasks}/>
     </div>);
 }
 
