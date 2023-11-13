@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
+import { useContext } from "react";
+import {MyContext, MyContext2} from '../context/MyContext';
 
-const TaskList = ({tasks, setTasks}) => {
+const TaskList = () => {
+    const tasks = useContext(MyContext);
+    const setTasks = useContext(MyContext2);
 
     const [editTask, setEditTask] = useState()
     const updateLocalStorage = (updatedTasks) => {
@@ -14,23 +18,29 @@ const TaskList = ({tasks, setTasks}) => {
         }
       }, []);
 
-      const editarTarea = (tarea, newDescripcion) => {
-        tarea.name = newDescripcion;
+      const editChore = (todo, newDescripcion) => {
+        todo.name = newDescripcion;
         setEditTask(null);
         updateLocalStorage(tasks);
       };
 
-      const checkedTask = (tarea, newValue) => {
-        tarea.completed = newValue;
+      const editChore2 = (todo, newDescripcion) => {
+        todo.description = newDescripcion;
+        setEditTask(null);
         updateLocalStorage(tasks);
-        setStrikeThroughCSS((prev) => !prev)
+      };
+
+      const checkedTask = (todo, newValue) => {
+        todo.completed = newValue;
+        updateLocalStorage(tasks);
+        setStrikeThroughCSS((prev) => !prev);
         console.log(tasks);
       };
 
       const [strikeThroughCSS, setStrikeThroughCSS] = useState(false);
       
-      const eliminarTarea = (tarea) => {
-        const updatedTasks = tasks.filter((task) => task.id !== tarea.id); 
+      const deleteTask= (todo) => {
+        const updatedTasks = tasks.filter((task) => task.id !== todo.id); 
         setTasks(updatedTasks);
         updateLocalStorage(updatedTasks);
       };
@@ -43,28 +53,57 @@ const TaskList = ({tasks, setTasks}) => {
                     <div >
                     {editTask === chore ? (
                         <div className="task-list-content">
-                            <input
-                            className='input-update'
-                            type="text"
-                            defaultValue={chore.name}
-                            onKeyPress={(e) => {
-                                if (e.key === 'Enter') {
-                                editarTarea(chore, e.target.value);
-                                }
-                            }}
-                            />
+                            <div>
+                                <input
+                                className='input-update'
+                                type="text"
+                                defaultValue={chore.name}
+                                onKeyPress={(e) => {
+                                    if (e.key === 'Enter') {
+                                    editChore(chore, e.target.value);
+                                    }
+                                }}
+                                />
+                            </div>
+                            <div>
+                                <textarea
+                                cols="25" 
+                                rows="3"
+                                className='text-update-description'
+                                type="text"
+                                defaultValue={chore.description}
+                                onKeyPress={(e) => {
+                                    if (e.key === 'Enter') {
+                                    editChore2(chore, e.target.value);
+                                    }
+                                }}
+                                >
+                                </textarea>
+                            </div>
                         </div>  
                     ) : (
                         <div className="task-list-content">
-                            {chore.completed ? 
-                            <input type="checkbox" onClick={(e) => {checkedTask(chore, e.target.checked)}}  defaultChecked/> 
-                            : <input type="checkbox" onClick={(e) => {checkedTask(chore, e.target.checked)}} />}
                             <div className="task-list-content-left">
-                                <span style={{ textDecoration : chore.completed ? 'line-through' : 'none'}}><p className="task-name">{chore.name}</p></span>
+                                {chore.completed ? 
+                                <input 
+                                type="checkbox" 
+                                className="task-check"
+                                onClick={(e) => {checkedTask(chore, e.target.checked)}}  
+                                defaultChecked/> 
+                                : 
+                                <input type="checkbox"
+                                className="task-check"
+                                onClick={(e) => {checkedTask(chore, e.target.checked)}} />}
+                            </div>
+                            <div className="task-list-content-center">
+                                <span style={{ textDecoration : chore.completed ? 'line-through' : 'none'}}>
+                                    <h2 className="task-name">{chore.name}</h2>
+                                    <p className="task-description">{chore.description}</p>
+                                </span>
                             </div>
                             <div className="task-list-content-right">
                                 <button className="edit-task-list" onClick={() => setEditTask(chore)}>Edit</button>
-                                <button className="edit-task-list" onClick={() =>  eliminarTarea(chore)}>Delete</button>
+                                <button className="delete-task-list" onClick={() => deleteTask(chore)}>Delete</button>
                             </div>
                         </div>
                     )}
