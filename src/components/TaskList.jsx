@@ -2,6 +2,10 @@ import { useState, useEffect } from "react";
 import { useContext } from "react";
 import {MyContext, MyContext2} from '../context/MyContext';
 
+import { Divider, Stack, Button } from '@chakra-ui/react'
+import { IconContext } from "react-icons";
+import { MdEditDocument, MdDelete } from "react-icons/md";
+
 const TaskList = () => {
     const tasks = useContext(MyContext);
     const setTasks = useContext(MyContext2);
@@ -46,8 +50,10 @@ const TaskList = () => {
       };
 
     return (
+        
     <div className="div-task-list">
-        <hr />
+        <IconContext.Provider value={{ color: "white", size: '35px', className: "global-class-name" }}>
+        <Divider orientation='horizontal' />
             {tasks.toReversed().map((chore, index) => (
                 <div key={chore.id}>
                     <div >
@@ -102,17 +108,18 @@ const TaskList = () => {
                                 </span>
                             </div>
                             <div className="task-list-content-right">
-                                <button className="edit-task-list" onClick={() => setEditTask(chore)}>Edit</button>
-                                <button className="delete-task-list" onClick={() => deleteTask(chore)}>Delete</button>
+                                <Stack spacing={4} direction='row' align='center'>
+                                    <Button colorScheme='blue' variant='solid' className="edit-task-list" onClick={() => setEditTask(chore)}><MdEditDocument /></Button>
+                                    <Button colorScheme='red' variant='solid' className="delete-task-list" onClick={() => deleteTask(chore)}> <MdDelete /> </Button>
+                                </Stack>
                             </div>
                         </div>
                     )}
-                    <hr />
+                    <Divider orientation='horizontal' />
                     </div>
                 </div>
             ))}
-            
-
+        </IconContext.Provider>
     </div>);
 }
 
